@@ -8,3 +8,8 @@
 *.exe
 
 others/
+
+
+template.cpp
+
+.vscode/

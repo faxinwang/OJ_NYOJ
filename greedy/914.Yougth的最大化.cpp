@@ -25,12 +25,27 @@ Yougth现在有n个物品的重量和价值分别是Wi和Vi，你能帮他从中选出k个物品使得单位重量
 http://blog.csdn.net/zsc2014030403015/article/details/45037123
 解题思路： 
 网上说的01分数规划，不是很懂，说一下我对这道题的理解。
-1.N个数中k个数的平局数不超过给定的N个数中的最大数，所以0<ans<=Max{a[1,2...N-1]} 
+1.N个数中k个数的平局数不超过给定的N个数中的最大数，所以0< x <=Max{a[1,2...N-1]} 
 2.用二分法逼近最大值Low=0,High=maxai：
-	ans = (Low + High) / 2
-	检测ans是否可以取跟大的值，如果可以,Low = ans
-	如果不可以，High = ans
-3.检测方法为，取最大的k个v[i] - ans*w[i]的和，如果和大于0,说明ans可以取更大的值。
+	x = (Low + High) / 2
+	检测ans是否可以取跟大的值，如果可以,Low = x
+	如果不可以，High = x
+3.检测方法为，取最大的k个v[i] - x*w[i]的和，如果和大于0,说明x可以取更大的值。
+
+推导:
+假设选取的物品集合为S, 则他们的单位重量的价值是:
+Sum{vi | i属于S} / Sum{ wi | i属于S}
+
+因此check(double x) 就变成了判断 : 
+Sum{vi | i属于S} / Sum{ wi | i属于S} >= x
+
+变形的:
+==> Sum{vi | i属于S} >= Sum{wi | i属于S} * x
+==> sum{vi - wi * x | i属于S} >=0
+
+所以可以对所有的 yi = vi - wi * x 进行降序排序, 选取最大的k个yi, 如果和大于0,
+则说明可以选取到单位价位为x的k个物品. 返回true将x调整到跟大的值. 
+
 */ 
 #include<iostream> 
 #include<cstdio>
